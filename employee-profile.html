@@ -1,0 +1,125 @@
+
+{% extends "base.html" %}
+
+{% block title %}Employee Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee Profile</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Employee Details</h2>
+      <p><strong>Name:</strong> {{employee.employee_fname}}</p>
+      <p><strong>Email:</strong> {{employee.employee_email}}</p>
+      <p><strong>Position:</strong> {{employee.position}}</p>
+      <p><strong>Department:</strong> IT</p>
+      <p><strong>Date of Birth:</strong> {{employee.dob}}</p>
+      <p><strong>Contact Number:</strong> {{employee.employee_no}}</p>
+    </div>
+    <div class="col-md-6">
+      <h2>Documents</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Document Type</th>
+            <th>Document Number</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Passport</td>
+            <td>P123456</td>
+            <td>2026-01-01</td>
+            <td><span class="label label-success">Valid</span></td>
+          </tr>
+          <tr>
+            <td>Driver's License</td>
+            <td>DL987654</td>
+            <td>2024-06-01</td>
+            <td><span class="label label-success">Valid</span></td>
+          </tr>
+          <tr>
+            <td>Health Insurance</td>
+            <td>HI123456</td>
+            <td>2023-01-01</td>
+            <td><span class="label label-danger">Expired</span></td>
+          </tr>
+        </tbody>
+      </table>
+     <!-- test-->
+     
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Document Type</th>
+        <th>Document Number</th>
+        <th>Expiry Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Passport</td>
+        <td>P123456</td>
+        <td>2026-01-01</td>
+        <td><span class="label label-success">Valid</span></td>
+        <td>
+          <button class="btn btn-default btn-sm">Update</button>
+          <button class="btn btn-success btn-sm">Mark as Validated</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Driver's License</td>
+        <td>DL987654</td>
+        <td>2024-06-01</td>
+        <td><span class="label label-success">Valid</span></td>
+        <td>
+          <button class="btn btn-default btn-sm">Update</button>
+          <button class="btn btn-success btn-sm">Mark as Validated</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Health Insurance</td>
+        <td>HI123456</td>
+        <td>2023-01-01</td>
+        <td><span class="label label-danger">Expired</span></td>
+        <td>
+          <button class="btn btn-default btn-sm">Update</button>
+          <button class="btn btn-success btn-sm" disabled>Mark as Validated</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary">Add New Document</button>
+
+
+     <!-- end-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Medical Information</h2>
+      <p><strong>Medical Condition:</strong> health</p>
+      <p><strong>Last Medical Check-up:</strong> 2023-09-01</p>
+      <p><strong>Next Scheduled Check-up:</strong> 2024-03-01</p>
+      <p><strong>Status:</strong> <span class="label label-warning">Upcoming</span></p>
+    </div>
+    <div class="col-md-6">
+      <h2>Additional Information</h2>
+      <p><strong>Address:</strong> 123 Main St, Anytown, USA</p>
+      <p><strong>Emergency Contact:</strong> Jane Doe, 0987654321</p>
+    </div>
+  </div>
+  
+  
+  {{employee.employee_fname}}
+  {{employee.employee_email}}
+  
+  
+</div>
+{% endblock %}

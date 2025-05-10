@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block title %}Employee List{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee List</h1>
+  </div>
+  <p>
+    <a class="btn btn-primary" href="#" role="button">Add New Employee</a>
+  </p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Position</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!---
+      <tr>
+        <td>John Doe</td>
+        <td>john.doe@example.com</td>
+        <td>Software Engineer</td>
+        <td>
+          <a class="btn btn-default btn-sm" href="#" role="button">View Profile</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Jane Smith</td>
+        <td>jane.smith@example.com</td>
+        <td>Marketing Manager</td>
+        <td>
+          <a class="btn btn-default btn-sm" href="#" role="button">View Profile</a>
+        </td>
+      </tr>
+      -->
+      {%for empl in employees%}
+      <tr>
+        <td>{{empl.employee_fname}} </td>
+        <td>{{empl.employee_email}}</td>
+        <td>{{empl.position}}</td>
+        <td>
+          <a class="btn btn-default btn-sm" href="{{url_for('employee_profile',id=empl.id )}}" role="button">View Profile</a>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
