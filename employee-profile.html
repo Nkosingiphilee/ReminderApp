@@ -1,0 +1,73 @@
+
+{% extends "base.html" %}
+
+{% block title %}Employee Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee Profile</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Employee Details</h2>
+      <p><strong>Name:</strong> {{employee.full_name}}</p>
+      <p><strong>Email:</strong> {{employee.email}}</p>
+      {%for empl in employee.employee%}
+      <p><strong>Position:</strong> {{empl.position}}</p>
+      <p><strong>Department:</strong> {{empl.department}}</p>
+      <p><strong>Date of Birth:</strong> {{empl.dob}}</p>
+      
+      <p><strong>Contact Number:</strong> {{employee.phone_no}}</p>
+    </div>
+    <div class="col-md-6">
+      <h2>Documents</h2>
+     
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Document Type</th>
+        <th>Document Number</th>
+        <th>Expiry Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+     {%for doc in empl.documents%}
+      <tr>
+        <td>{{doc.document}}</td>
+        <td>{{doc.document_type}}</td>
+        <td>{{doc.expiring_date}}</td>
+        <td><span class="label label-success">{{doc.status}}</span></td>
+        <td>
+          <button class="btn btn-default btn-sm">Update</button>
+        </td>
+      </tr>
+       {%endfor%}
+  
+    </tbody>
+  </table>
+   {%endfor%}
+  <a class="btn btn-primary" href="{{url_for('upload_document')}}" role="button">Add New document</a>
+
+     <!-- end-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Medical Information</h2>
+      <p><strong>Medical Condition:</strong> health</p>
+      <p><strong>Last Medical Check-up:</strong> 2023-09-01</p>
+      <p><strong>Next Scheduled Check-up:</strong> 2024-03-01</p>
+      <p><strong>Status:</strong> <span class="label label-warning">Upcoming</span></p>
+    </div>
+    <div class="col-md-6">
+      <h2>Additional Information</h2>
+      <p><strong>Address:</strong> 123 Main St, Anytown, USA</p>
+      <p><strong>Emergency Contact:</strong> Jane Doe, 0987654321</p>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

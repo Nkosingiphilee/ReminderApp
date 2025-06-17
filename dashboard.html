@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+
+{% block title %}Reminder App{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee Document Expiration Reminder <small>Admin Dashboard</small></h1>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Welcome, Admin!</h2>
+      <p>This app helps you track employee document expirations, ensuring compliance and reducing administrative burdens.</p>
+      <p>
+        <a class="btn btn-primary" href="#">View Upcoming Expirations</a>
+        <a class="btn btn-default" href="{{url_for('employee_list')}}">Manage Employee Documents</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h2>Quick Stats</h2>
+      <ul>
+        <li><strong>Documents Expiring Soon:</strong> 5</li>
+        <li><strong>Expired Documents:</strong> 2</li>
+        <li><strong>Total Employees:</strong> 20</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Recent Activity</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Document</th>
+            <th>Expiration Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Passport</td>
+            <td>2024-03-15</td>
+            <td><span class="label label-warning">Expiring Soon</span></td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>Driver's License</td>
+            <td>2024-02-20</td>
+            <td><span class="label label-danger">Expired</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

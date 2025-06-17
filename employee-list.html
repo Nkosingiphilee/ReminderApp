@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block title %}Employee List{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee List</h1>
+  </div>
+  <p>
+    <a class="btn btn-primary" href="{{url_for('add_employee')}}" role="button">Add New Employee</a>
+  </p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Position</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+   
+      {%for empl in employees%}
+      <tr>
+        <td>{{empl.full_name}} </td>
+        <td>{{empl.email}}</td>
+         {%for pos in empl.employee%}
+        <td>{{pos.position}}</td>
+        {%endfor%}
+        <td>
+          <a class="btn btn-default btn-sm" href="{{url_for('employee_profile',id=empl.id )}}" role="button">View Profile</a>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+
+  <stript>
+  alet('hello')
+</stript>
+
+{% endblock %}

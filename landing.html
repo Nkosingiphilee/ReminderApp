@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block title %}Employee Document Expiration Reminder{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Employee Document Expiration Reminder</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Track Expirations</h2>
+      <p>Easily track employee document expirations and receive reminders.</p>
+    </div>
+    <div class="col-md-4">
+      <h2>Manage Documents</h2>
+      <p>Store and manage employee documents in one place.</p>
+    </div>
+    <div class="col-md-4">
+      <h2>Customizable Reminders</h2>
+      <p>Set custom reminders for upcoming expirations.</p>
+    </div>
+  </div>
+  <p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
+  
+  {%for a in user%}
+  {{a}}
+  {%endfor%}
+</div>
+{% endblock %}
