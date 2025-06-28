@@ -17,7 +17,7 @@ class User(db.Model,UserMixin):
 	full_name=db.Column(db.String(100) ,nullable=False)
 	email=db.Column(db.String(60),nullable=False,unique=True)
 	phone_no=db.Column(db.String(15),nullable=False,unique=True)
-	hash_password=db.Column(db.String(100),nullable=False)
+	hash_password=db.Column(db.String(100),nullable=False ,default='password')
 	role_id=db.Column(db.Integer ,db.ForeignKey('role.id'),nullable=False ,default=3)
 	employee=db.relationship('Employee', backref='user')
 	

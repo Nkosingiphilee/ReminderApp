@@ -55,39 +55,43 @@ def employee_list():
 def add_employee():
 	form=EmployeeForm()
 	if form.validate_on_submit():
-		employee=Employee(employee_fname=form.full_name.data,
-		dob=form.dob.data,
-		employee_email=form.email.data,
-		employee_no=form.phone_number.data,
-		department=form.department.data,
-		position=form.position.data
-		)
+		user=User(
+		full_name=form.full_name.data,
+		email=form.email.data,phone_no=form.phone_number.data,
+		hash_password='password',
+	role_id=3)
+		db.session.add(user)
+		db.session.flush()
+		employee=Employee(
+	dob=form.dob.data,
+	department=form.department.data,
+	position=form.position.data, user_id=user.id)
+
 		db.session.add(employee)	
 		db.session.commit()
 		flash('new employee added','success')
 		return redirect(url_for('employee_list'))
-	return render_template('add-employee.html',form=form)
-	
-	
+	return render_template('add-employee.html', form=form)
 @app.route('/employee-profile/<id>')
 def employee_profile(id):
 	employee=User.query.get(id)
 	return render_template('employee-profile.html',employee=employee)
 
 	
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']	
-# im having an issue handling the document submission	
-@app.route('/upload-document',methods=['POST','GET'])
+@app.route('/upload-document', methods=['POST', 'GET'])
 def upload_document():
-	form=EmployeeDocumentForm()
-	if form.validate_on_submit():
-	       document = form.document.data
-	       if document and allowed_file(document.filename):
-	           filename = secure_filename(document.filename)
-	           document.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-	           flash('document uploaded','info')
-	return render_template('upload-document.html', form=form)
+    form = EmployeeDocumentForm()
+    if form.validate_on_submit():
+        document = form.document.data
+        if document and allowed_file(document.filename):
+            filename = secure_filename(document.filename)
+            try:
+                document.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                flash('Document uploaded successfully', 'info')
+            except Exception as e:
+                flash('Error uploading document: ' + str(e), 'error')
+            return redirect(url_for('upload_document')) 
+    return render_template('upload-document.html', form=form)
 
 	
 
@@ -122,10 +126,52 @@ def doc_status():
         with app.app_context():
         	docs=EmployeeDocument.query.all()
         	for doc in docs:
-        		doc.status=update_status(doc.expiring_date+timedelta(weeks=100))
+        		doc.status=update_status(doc.expiring_date)
         	db.session.commit()
-        
+        	
+def send_reset_email(total,expired,valid,in30days):
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=['phungula82@outlook.com']) 
+    msg.subject="This report highlights the current status of documents"
+    msg.body = f'''Dear Administrator,
+
+
+This report highlights the current status of documents:
+
+
+- Total Documents: {len(total)}
+- Expired: {expired.count()}
+- Valid:{valid.count()}
+- Expiring in 30 days:  {in30days.count()} documents are  expiring in the next 30 days
+
+
+We recommend reviewing and updating expired documents and taking action on documents expiring soon.
+
+
+Best regards,
+employee management
+'''
+    mail.send(msg)
+
+def send_report():
+	with app.app_context():
+		total=EmployeeDocument.query.all()
+		expired=EmployeeDocument.query.filter_by(status='Expired')
+		valid=EmployeeDocument.query.filter_by(status='Valid')
+		
+		today=datetime.today()
+		thirthydays=today+timedelta(weeks=4, days=2)
+		in30days=EmployeeDocument.query.filter_by(expiring_date=thirthydays.date())
+		send_reset_email(total,expired,valid,in30days)
+		
+def report():
+	print('this is a reminder app')
+	
+		
 
 sched =BackgroundScheduler(daemon=True)
-sched.add_job(doc_status,'interval',seconds=10)
+sched.add_job(doc_status,'interval',seconds=5)
+sched.add_job(send_report,'interval',hours=2)
+#sched.add_job(report,'interval',seconds=2)
 sched.start()

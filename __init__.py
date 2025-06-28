@@ -8,17 +8,20 @@ app=Flask(__name__)
 app.config['SECRET_KEY'] = '2020325555825'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///eskomapp.db'
 
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['UPLOAD_FOLDER'] = 'static/uploads'# Set upload folder
+#app.config['UPLOAD_FOLDER'] = 'static/uploads'# Set upload folder
+import os
+
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'docx', 'doc'}  # Set allowed file types
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 
-#app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_TLS'] = True
 
 app.config['MAIL_USERNAME'] = 'Phungulankosingiphile828@gmail.com'
 
-app.config['MAIL_PASSWORD'] =''
+app.config['MAIL_PASSWORD'] =""
 
 
 db=SQLAlchemy(app)
